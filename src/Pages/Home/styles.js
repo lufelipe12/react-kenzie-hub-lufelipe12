@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 const HomeDiv = styled.div`
   width: 310px;
-  height: 310px;
+  height: 330px;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const StyledButton = styled.button`
-  width: 260px;
+  width: 100%;
   height: 40px;
   color: var(--grey-0);
   background-color: ${(props) => (props.register ? "#868E96" : "#FF577F")};
