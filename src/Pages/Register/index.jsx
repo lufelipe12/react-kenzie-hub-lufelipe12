@@ -5,6 +5,8 @@ import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import api from "../../Services/api";
+import { toast } from "react-toastify";
 
 const Register = () => {
   const history = useHistory();
@@ -12,6 +14,9 @@ const Register = () => {
   const schema = yup.object().shape({
     name: yup.string().required("Digite um nome"),
     email: yup.string().email("email inválido").required("Digite um email"),
+    course_module: yup.string().required("Digite um módulo"),
+    bio: yup.string().required("Digite uma frase"),
+    contact: yup.string().required("Digite um contato"),
     password: yup
       .string()
       .required("Digite uma senha")
@@ -20,7 +25,6 @@ const Register = () => {
       .string()
       .oneOf([yup.ref("password"), null], "Confirmação inválida")
       .required("Confirme a senha"),
-    module: yup.string().required("Digite um módulo"),
   });
 
   const {
@@ -30,7 +34,18 @@ const Register = () => {
   } = useForm({ resolver: yupResolver(schema) });
 
   const onSubmit = (data) => {
-    console.log(data);
+    delete data.confirm_password;
+    api
+      .post("/users", data)
+      .then((response) => {
+        console.log(response);
+        toast.success("Cadastro realizado com sucesso, faça seu login!");
+        history.push("/login");
+      })
+      .catch((err) => {
+        toast.error("Email inválido");
+        console.log(err);
+      });
   };
 
   return (
@@ -54,6 +69,27 @@ const Register = () => {
         <span>{errors.email?.message}</span>
         <Input
           register={register}
+          name="course_module"
+          placeholder="Digite aqui seu módulo"
+          label="Módulo"
+        />
+        <span>{errors.course_module?.message}</span>
+        <Input
+          register={register}
+          name="bio"
+          placeholder="Uma frase"
+          label="Uma frase que te define"
+        />
+        <span>{errors.bio?.message}</span>
+        <Input
+          register={register}
+          name="contact"
+          placeholder="Digite um contato qualquer"
+          label="Contato"
+        />
+        <span>{errors.contact?.message}</span>
+        <Input
+          register={register}
           name="password"
           placeholder="Digite aqui sua senha"
           label="Senha"
@@ -68,13 +104,6 @@ const Register = () => {
           type="password"
         />
         <span>{errors.confirm_password?.message}</span>
-        <Input
-          register={register}
-          name="module"
-          placeholder="Digite aqui seu módulo"
-          label="Módulo"
-        />
-        <span>{errors.module?.message}</span>
         <Button type="submit">Cadastrar</Button>
       </StyledForm>
     </Container>
