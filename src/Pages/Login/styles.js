@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  height: 750px;
+  height: 450px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -10,8 +10,8 @@ export const Container = styled.div`
 
 export const StyledForm = styled.form`
   width: 295px;
-  min-height: 650px;
-  max-height: 720px;
+  min-height: 350px;
+  max-height: 400px;
   padding: 20px;
   background-color: var(--grey-3);
   display: flex;
@@ -33,8 +33,6 @@ export const StyledForm = styled.form`
   }
 
   button {
-    background-color: var(--primary-dark);
-    border-color: var(--primary-dark);
-    margin-top: 5px;
+    margin-top: 10px;
   }
 `;
