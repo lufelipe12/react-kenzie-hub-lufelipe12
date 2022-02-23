@@ -11,6 +11,9 @@ const GlobalStyles = createGlobalStyle`
     font-family: "Inter", sans-serif;
     font-size: 12px;
     color:var(--grey-1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   h1,h2,h3{
