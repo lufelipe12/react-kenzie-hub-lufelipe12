@@ -10,7 +10,7 @@ const GlobalStyles = createGlobalStyle`
     height: 100vh;
     font-family: "Inter", sans-serif;
     font-size: 12px;
-    color:var(--grey-1);
+    color:var(--grey-0);
     display: flex;
     justify-content: center;
     align-items: center;
