@@ -7,8 +7,9 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import api from "../../Services/api";
 import { toast } from "react-toastify";
+import { Redirect } from "react-router-dom";
 
-const Register = () => {
+const Register = ({ auth }) => {
   const history = useHistory();
 
   const schema = yup.object().shape({
@@ -47,6 +48,10 @@ const Register = () => {
         console.log(err);
       });
   };
+
+  if (auth) {
+    return <Redirect to="/dashboard" />;
+  }
 
   return (
     <Container>

@@ -1,10 +1,10 @@
-import { useHistory } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import HomeDiv from "./styles";
 import Button from "../../Components/Button";
 import { motion } from "framer-motion";
 
-const Home = () => {
+const Home = ({ auth }) => {
   const history = useHistory();
 
   function toLogin() {
@@ -13,6 +13,10 @@ const Home = () => {
 
   function toRegister() {
     history.push("/register");
+  }
+
+  if (auth) {
+    return <Redirect to="/dashboard" />;
   }
 
   return (

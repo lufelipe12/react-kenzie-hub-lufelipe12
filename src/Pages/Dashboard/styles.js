@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   width: 300px;
+  position: relative;
 
   section {
     width: 100%;
@@ -29,8 +30,9 @@ export const DivTecnologies = styled.div`
   padding: 10px;
   background-color: var(--grey-3);
   display: flex;
-  justify-content: center;
-  align-content: flex-start;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-content: center;
 `;
 
 export const StyledButton = styled.button`
@@ -40,6 +42,7 @@ export const StyledButton = styled.button`
   color: var(--grey-0);
   border: 0;
   border-radius: 5px;
+  font-weight: 600;
 
   :hover {
     cursor: pointer;
