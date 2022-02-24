@@ -1,10 +1,10 @@
 import { Container } from "./styles";
 
-const Card = () => {
+const Card = ({ status, title }) => {
   return (
     <Container>
-      <h3>React JS</h3>
-      <p>Iniciante</p>
+      <h3>{title}</h3>
+      <p>{status}</p>
     </Container>
   );
 };

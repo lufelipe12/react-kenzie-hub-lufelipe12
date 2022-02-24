@@ -6,8 +6,9 @@ import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import api from "../../Services/api";
 import { toast } from "react-toastify";
+import { Redirect } from "react-router-dom";
 
-const Login = () => {
+const Login = ({ setAuth, auth }) => {
   const history = useHistory();
 
   const {
@@ -21,14 +22,26 @@ const Login = () => {
       .post("/sessions", data)
       .then((response) => {
         toast.success("Bem vindo!");
-        history.push("/dashboard");
-        localStorage.setItem("@kenzieHub:token", response.data.token);
+        localStorage.setItem(
+          "@kenzieHub:token",
+          JSON.stringify(response.data.token)
+        );
+        localStorage.setItem(
+          "@kenzieHub:user",
+          JSON.stringify(response.data.user)
+        );
+        setAuth(true);
+        return history.push("/dashboard");
       })
       .catch((err) => {
         toast.error("Email ou senha inválidos");
         console.log(err);
       });
   };
+
+  if (auth) {
+    return <Redirect to="/dashboard" />;
+  }
 
   return (
     <Container>
