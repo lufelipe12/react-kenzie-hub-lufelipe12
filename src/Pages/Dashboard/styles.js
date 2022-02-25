@@ -3,6 +3,10 @@ import styled from "styled-components";
 export const Container = styled.div`
   width: 300px;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
   section {
     width: 100%;
@@ -21,6 +25,14 @@ export const Container = styled.div`
   hr {
     border: 1px solid var(--grey-3);
   }
+
+  @media (min-width: 1010px) {
+    width: 900px;
+  }
+
+  @media (min-width: 1100px) {
+    width: 980px;
+  }
 `;
 
 export const DivTecnologies = styled.div`
@@ -32,7 +44,15 @@ export const DivTecnologies = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  align-content: center;
+  align-items: center;
+
+  @media (min-width: 1010px) {
+    width: 900px;
+  }
+
+  @media (min-width: 1100px) {
+    width: 980px;
+  }
 `;
 
 export const StyledButton = styled.button`

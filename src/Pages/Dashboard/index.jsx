@@ -3,26 +3,34 @@ import Card from "../../Components/Card";
 import Header from "../../Components/Header";
 import { Redirect } from "react-router-dom";
 import { useState } from "react";
-import Modal from "../../Components/Modal";
+import ModalPost from "../../Components/ModalPost";
 import api from "../../Services/api";
 import { useEffect } from "react";
+import { motion } from "framer-motion";
+import ModalPut from "../../Components/ModalPut";
 
 const Dashboard = ({ auth, setAuth }) => {
-  const [addTech, setAddTech] = useState(false);
+  const [modalPost, setModalPost] = useState(false);
+
+  const [modalPut, setModalPut] = useState(false);
+
+  const [itemToChange, setItemToChange] = useState("");
 
   const [user] = useState(JSON.parse(localStorage.getItem("@kenzieHub:user")));
 
   const [techList, setTechList] = useState([]);
 
   useEffect(() => {
-    api
-      .get(`https://kenziehub.herokuapp.com/users/${user.id}`)
-      .then((response) => setTechList(response.data.techs))
-      .catch((err) => console.log(err));
+    if (auth) {
+      api
+        .get(`https://kenziehub.herokuapp.com/users/${user.id}`)
+        .then((response) => setTechList(response.data.techs))
+        .catch((err) => console.log(err));
+    }
   }, [techList]);
 
   const createTech = () => {
-    setAddTech(true);
+    setModalPost(true);
   };
 
   if (!auth) {
@@ -30,24 +38,44 @@ const Dashboard = ({ auth, setAuth }) => {
   }
 
   return (
-    <Container>
-      <Header setAuth={setAuth} />
-      <section>
-        <h1>Olá, {user.name}</h1>
-        <p>{user.course_module}</p>
-      </section>
-      <hr />
-      <nav>
-        {addTech && <Modal user={user} setAddTech={setAddTech} />}
-        <h3>Tecnologias</h3>
-        <StyledButton onClick={createTech}> + </StyledButton>
-      </nav>
-      <DivTecnologies>
-        {techList.map(({ title, status }) => (
-          <Card title={title} status={status} />
-        ))}
-      </DivTecnologies>
-    </Container>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 2.5 }}
+    >
+      <Container>
+        <Header setAuth={setAuth} />
+        <section>
+          <h1>Olá, {user.name}</h1>
+          <p>{user.course_module}</p>
+        </section>
+        <hr />
+        <nav>
+          {modalPost && <ModalPost user={user} setModalPost={setModalPost} />}
+          {modalPut && (
+            <ModalPut
+              user={user}
+              setModalPut={setModalPut}
+              itemToChange={itemToChange}
+            />
+          )}
+          <h3>Tecnologias</h3>
+          <StyledButton onClick={createTech}> + </StyledButton>
+        </nav>
+        <DivTecnologies>
+          {techList.map(({ title, status, id }) => (
+            <Card
+              setModalPut={setModalPut}
+              setItemToChange={setItemToChange}
+              title={title}
+              status={status}
+              id={id}
+            />
+          ))}
+        </DivTecnologies>
+      </Container>
+    </motion.div>
   );
 };
 
