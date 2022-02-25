@@ -6,9 +6,9 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 
-const Modal = ({ setAddTech }) => {
+const ModalPut = ({ setModalPut, itemToChange }) => {
   const close = () => {
-    return setAddTech(false);
+    return setModalPut(false);
   };
 
   const [token] = useState(
@@ -19,38 +19,34 @@ const Modal = ({ setAddTech }) => {
 
   const onSubmit = (data) => {
     api
-      .post("/users/techs", data, {
+      .put(`/users/techs/${itemToChange}`, data, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((_) => {
-        toast.success("Tecnologia cadastrada");
+        toast.success("Tecnologia atualizada");
       })
-      .catch((err) => console.log(err));
+      .catch((err) => toast.error("Ops!! Algo deu errado."));
   };
 
   return (
     <>
       <ModalDiv>
-        <h3>Adicione sua tecnologia</h3>
-        <StyledButton onClick={close}> x </StyledButton>
+        <div>
+          <h4>Editar tecnologia</h4>
+          <StyledButton onClick={close}> x </StyledButton>
+        </div>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Input
             register={register}
-            name="title"
-            placeholder="Digite aqui sua tecnologia"
-            label="Nome"
-          />
-          <Input
-            register={register}
             name="status"
-            placeholder="Iniciante, intermediário ou avançado"
+            placeholder="Atualize seu progresso"
             label="Status"
           />
-          <Button type="submit">Cadastrar tecnologia</Button>
+          <Button type="submit">Atualizar tecnologia</Button>
         </form>
       </ModalDiv>
     </>
   );
 };
 
-export default Modal;
+export default ModalPut;

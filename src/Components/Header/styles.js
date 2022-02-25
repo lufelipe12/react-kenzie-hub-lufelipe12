@@ -4,7 +4,7 @@ export const StyledHeader = styled.header`
   width: 100%;
   height: 72px;
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   border-bottom: 1px solid var(--grey-3);
 
@@ -14,6 +14,13 @@ export const StyledHeader = styled.header`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    @media (min-width: 1010px) {
+      width: 900px;
+    }
+
+    @media (min-width: 1100px) {
+      width: 980px;
+    }
   }
 `;
 
